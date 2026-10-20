@@ -3,7 +3,8 @@ import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } fr
 import { CHARACTERS } from "../config/characters";
 import { FONTS } from "../config/fonts";
 import { SAFE_ZONE } from "../config/video";
-import { DogRig, NEUTRAL_POSE } from "./character/DogRig";
+import { Character } from "./character/Character";
+import { NEUTRAL_POSE } from "./character/DogRig";
 
 // Pantalla final: logo, eslogan y avance del próximo capítulo.
 
@@ -64,19 +65,19 @@ export const EpisodeOutro: React.FC<{ nextNumber: number; nextTitle: string }> =
         <div style={{ fontFamily: FONTS.captions, fontWeight: 800, fontSize: 60, lineHeight: 1.1, color: "#2A160A", marginTop: 8 }}>{nextTitle}</div>
       </div>
 
-      {/* adelanto: Euro cachorro con una chancla */}
-      <div style={{ position: "absolute", left: 300, top: 1080, width: 330, height: 440, transform: `scale(${c})` }}>
-        <DogRig
-          uid="outro-euro"
-          pose={{ ...NEUTRAL_POSE, open: 0.35 + chew * 0.15, mouthShape: "wide", smile: 0.6, lid: 0.3, headTilt: chew * 6, tail: Math.sin(frame * 0.8) * 25 }}
-          palette={CHARACTERS.euro.palette}
-          markings={CHARACTERS.euro.markings}
-          collarColor={CHARACTERS.euro.collarColor}
-          tagLetter={CHARACTERS.euro.tagLetter}
+      {/* adelanto: Euro con una chancla (mordemos todo...) */}
+      <div style={{ position: "absolute", left: 300, top: 1040, width: 330, height: 440, transform: `scale(${c})` }}>
+        <Character
+          id="euro"
           puppy
-          style={{ width: "100%", height: "100%" }}
+          uidSuffix="-outro"
+          pose={{ ...NEUTRAL_POSE, open: 0.25 + chew * 0.12, mouthShape: "wide", smile: 0.6, headTilt: chew * 5, breath: 0.5 + 0.5 * Math.sin(frame * 0.2) }}
+          body={{ x: 0, y: 0, rot: 0, scale: 1 }}
+          width={330}
+          x={165}
+          y={440}
         />
-        <svg width={200} height={120} viewBox="0 0 200 120" style={{ position: "absolute", left: 120, top: 250, transform: `rotate(${-20 + chew * 8}deg)` }}>
+        <svg width={200} height={120} viewBox="0 0 200 120" style={{ position: "absolute", left: 78, top: 42, transform: `rotate(${-20 + chew * 8}deg) scale(0.8)` }}>
           <path d="M10,60 C10,20 60,10 110,20 C170,30 195,50 190,70 C185,95 120,100 60,95 C25,92 10,80 10,60 Z" fill="#3FA9FF" stroke="#0D4A80" strokeWidth={6} />
           <path d="M70,30 C90,60 110,60 130,30" stroke="#FFD23F" strokeWidth={10} fill="none" strokeLinecap="round" />
           <path d="M180,55 l8,-6 l4,10 l8,-4" stroke="#0D4A80" strokeWidth={4} fill="none" />

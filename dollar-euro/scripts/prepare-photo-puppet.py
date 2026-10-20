@@ -54,11 +54,24 @@ def with_alpha(img: Image.Image, mask: Image.Image) -> Image.Image:
     return Image.fromarray(rgba.clip(0, 255).astype(np.uint8), "RGBA")
 
 
+def soften_frame_edges(img: Image.Image, width: int = 70) -> Image.Image:
+    """Donde la imagen original corta al perro (cola o grupa en el borde),
+    desvanece el pelo para que no quede un corte recto. El borde inferior
+    (patas en el suelo) se deja intacto."""
+    rgba = np.array(img).astype(np.float32)
+    h, w = rgba.shape[:2]
+    ramp = np.minimum(1.0, np.arange(width, dtype=np.float32) / width)
+    rgba[:, :width, 3] *= ramp[None, :]
+    rgba[:, w - width :, 3] *= ramp[::-1][None, :]
+    rgba[:width, :, 3] *= ramp[:, None]
+    return Image.fromarray(rgba.clip(0, 255).astype(np.uint8), "RGBA")
+
+
 def build(char_id: str):
     c = CONFIG[char_id]
     out = ROOT / "public/characters" / char_id
     out.mkdir(parents=True, exist_ok=True)
-    full = cutout(ROOT / c["source"])
+    full = soften_frame_edges(cutout(ROOT / c["source"]))
     size = full.size
     h = c["head"]
     # La cabeza lleva borde suave; el cuerpo pierde solo el núcleo opaco de
