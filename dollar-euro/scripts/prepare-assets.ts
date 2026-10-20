@@ -56,15 +56,17 @@ const envelope = (file: string) => {
     maxBuffer: 1024 * 1024 * 512,
   });
   if (r.status !== 0) throw new Error(`ffmpeg falló con ${file}: ${r.stderr}`);
-  const b = r.stdout as Buffer;
+  const b = Buffer.from(r.stdout as Buffer); // copia alineada a 4 bytes
   const samples = new Float32Array(b.buffer, b.byteOffset, Math.floor(b.length / 4));
-  const win = rate / FPS;
+  const frames = Math.ceil((samples.length / rate) * FPS);
   const rms: number[] = [];
-  for (let i = 0; i < samples.length; i += win) {
+  for (let k = 0; k < frames; k++) {
+    // Límites enteros: 16000/30 muestras por fotograma no es exacto.
+    const start = Math.round((k * rate) / FPS);
+    const end = Math.min(samples.length, Math.round(((k + 1) * rate) / FPS));
     let s = 0;
-    const end = Math.min(samples.length, i + win);
-    for (let j = i; j < end; j++) s += samples[j] * samples[j];
-    rms.push(Math.sqrt(s / Math.max(1, end - i)));
+    for (let j = start; j < end; j++) s += samples[j] * samples[j];
+    rms.push(Math.sqrt(s / Math.max(1, end - start)));
   }
   const sorted = [...rms].sort((a, b) => a - b);
   const ref = sorted[Math.floor(sorted.length * 0.95)] || 1;
@@ -97,7 +99,8 @@ const files = walk(PUBLIC)
   .filter((p) => !p.endsWith(".md") && !p.endsWith(".json"))
   .sort();
 
-const manifest: AssetManifest = { generatedAt: new Date().toISOString(), files, audio: {} };
+// Sin marca de hora: el archivo solo cambia cuando cambian los recursos.
+const manifest: AssetManifest = { generatedAt: null, files, audio: {} };
 for (const f of files.filter((x) => AUDIO_EXT.test(x))) {
   const abs = join(PUBLIC, f);
   const info: AudioInfo = { durationMs: durationMs(abs) };
