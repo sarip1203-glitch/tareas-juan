@@ -70,6 +70,7 @@ export const EpisodeOutro: React.FC<{ nextNumber: number; nextTitle: string }> =
           uid="outro-euro"
           pose={{ ...NEUTRAL_POSE, open: 0.35 + chew * 0.15, mouthShape: "wide", smile: 0.6, lid: 0.3, headTilt: chew * 6, tail: Math.sin(frame * 0.8) * 25 }}
           palette={CHARACTERS.euro.palette}
+          markings={CHARACTERS.euro.markings}
           collarColor={CHARACTERS.euro.collarColor}
           tagLetter={CHARACTERS.euro.tagLetter}
           puppy

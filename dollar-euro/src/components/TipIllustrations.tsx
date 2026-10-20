@@ -32,7 +32,8 @@ const Puppy: React.FC<{ x: number; y: number; w: number; pose: Partial<DogPose>;
   };
   return (
     <div style={{ position: "absolute", left: x - w / 2, top: y - (w * 4) / 3, width: w, height: (w * 4) / 3 }}>
-      <DogRig uid={`tip-${id}`} pose={full} palette={cfg.palette} collarColor={cfg.collarColor} tagLetter={cfg.tagLetter} puppy style={{ width: "100%", height: "100%" }} />
+      <DogRig uid={`tip-${id}`} pose={full} palette={cfg.palette}
+          markings={cfg.markings} collarColor={cfg.collarColor} tagLetter={cfg.tagLetter} puppy style={{ width: "100%", height: "100%" }} />
     </div>
   );
 };

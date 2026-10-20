@@ -31,6 +31,7 @@ export const CharacterSheet: React.FC<{ id: CharacterId }> = ({ id }) => {
               <DogRig
                 uid={`sheet-${id}-${name}`}
                 palette={cfg.palette}
+                markings={cfg.markings}
                 collarColor={cfg.collarColor}
                 tagLetter={cfg.tagLetter}
                 style={{ width: 300, height: 340 }}

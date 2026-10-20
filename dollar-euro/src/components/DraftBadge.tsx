@@ -1,4 +1,5 @@
 import React from "react";
+import { CHARACTERS } from "../config/characters";
 import { characterRenderMode } from "./character/Character";
 import { useEpisode } from "./EpisodeContext";
 
@@ -8,10 +9,12 @@ export const DraftBadge: React.FC = () => {
   const { ep, showDraftBadges } = useEpisode();
   if (!showDraftBadges) return null;
   const missing = ep.stats.missingAudio.length;
-  const rig = (["dollar", "euro"] as const).filter((id) => characterRenderMode(id) === "rig").length;
+  const rigIds = (["dollar", "euro"] as const).filter((id) => characterRenderMode(id) === "rig");
+  const noPhotos = rigIds.some((id) => CHARACTERS[id].palettesAreProvisional);
   const items: string[] = [];
   if (missing > 0) items.push(`SIN VOCES: ${missing}/${ep.stats.lines} audios pendientes (tiempos estimados)`);
-  if (rig > 0) items.push("PERSONAJES PROVISIONALES (sin fotos reales)");
+  if (noPhotos) items.push("PERSONAJES PROVISIONALES (sin fotos reales)");
+  else if (rigIds.length > 0) items.push("PERSONAJES 2.5D PROVISIONALES (colores de las fotos, sin animación final)");
   if (items.length === 0) return null;
   return (
     <div

@@ -32,7 +32,7 @@ const E = (p: Partial<ExprParams>): ExprParams => ({
   brow: 0,
   browAsym: 0,
   browAngle: 0,
-  lid: 0.12,
+  lid: 0.06,
   lowerLid: 0,
   pupilScale: 1,
   ear: 0,
@@ -59,7 +59,7 @@ export const EXPRESSIONS: Record<Expression, ExprParams> = {
   excited: E({ smile: 1, brow: 0.6, lid: 0, pupilScale: 1.25, ear: 14, mouthBase: 0.45, mouthBaseShape: "wide", tongue: 0.9, blush: 0.3, wag: 2.2 }),
   confused: E({ smile: 0, brow: 0.35, browAsym: -0.8, lid: 0.15, ear: 4, earAsym: 14, tilt: 13, wag: 0.3 }),
   laughing: E({ smile: 1, brow: 0.4, lid: 0.72, lowerLid: 0.45, ear: 6, mouthBase: 0.55, mouthBaseShape: "wide", tongue: 0.7, blush: 0.35, wag: 1.6 }),
-  proud: E({ smile: 0.6, brow: 0.2, lid: 0.32, lowerLid: 0.1, ear: 8, tilt: -3, chin: -8, wag: 0.8 }),
+  proud: E({ smile: 0.6, brow: 0.2, lid: 0.22, lowerLid: 0.1, ear: 8, tilt: -3, chin: -8, wag: 0.8 }),
   innocent: E({ smile: 0.35, brow: 0.65, browAngle: -0.45, lid: 0, pupilScale: 1.45, ear: 2, tilt: 9, wag: 0.6 }),
 };
 

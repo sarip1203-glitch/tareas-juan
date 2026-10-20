@@ -7,7 +7,7 @@ Episodio 1: **¿Quién se hizo chichí en la casa?**, sobre enseñar a un cachor
 
 > **Estado: borrador funcional.** El episodio compila, se ve en Remotion Studio y se exporta a MP4, pero
 > **todavía no tiene voces** (los tiempos se estiman a partir del texto) y **los perros son un rig SVG
-> provisional** hasta recibir las fotografías reales. El video lo marca en pantalla con un aviso
+> 2.5D provisional**, ya con los colores y marcas de sus fotografías reales. El video lo marca en pantalla con un aviso
 > "BORRADOR". Detalles en [Estado actual](#estado-actual).
 
 ---
@@ -66,12 +66,14 @@ Cada carpeta de `public/` tiene un `LEEME.md` con el formato exacto que espera.
 
 ### Fotografías de Dollar y Euro
 
-Mientras no haya fotos, los perros se dibujan con un rig SVG provisional: pastor de Shetland genérico en sable y blanco. **Lo único que los distingue es el collar**: azul para Dollar y amarillo para Euro, los mismos colores de sus subtítulos. No se inventaron rasgos definitivos.
+Las fotos de referencia están en `docs/referencias/` (`dollar-ladrillos.jpg` y `euro-sofa.jpg`). De ellas salen los colores y las marcas del rig 2.5D (`palette` y `markings` en `src/config/characters.ts`):
 
-Cuando lleguen las fotos hay dos caminos:
+- **Dollar**: sable muy sombreado, con cuerpo y melena casi negros y cara dorada con sombra alrededor de los ojos. Pechera blanca estrecha, patas canela arriba y blancas abajo, ojos almendrados. Collar azul.
+- **Euro**: sable con melena marrón muy oscuro y cara canela anaranjada. Pechera blanca grande, patas blancas, ojos redondos. Collar amarillo.
 
-1. **Ajustar el rig**: copiar los colores reales a `palette` en `src/config/characters.ts` (pelaje, sombras, blanco, nariz, iris) y poner `palettesAreProvisional: false`.
-2. **Usar las fotos directamente**: poner `cutout.png` (o `body.png` + `head.png` + `jaw.png`) en `public/characters/<perro>/`. El sistema cambia solo al modo foto 2.5D (ver `public/characters/LEEME.md`).
+Ninguno tiene lista blanca en la frente. Nunca hay que intercambiar estos valores entre los dos.
+
+Para usar las fotos directamente en lugar del dibujo, pongan un recorte sin fondo (`cutout.png`), o las capas `body.png` + `head.png` + `jaw.png`, en `public/characters/<perro>/`. El sistema cambia solo al modo foto 2.5D (ver `public/characters/LEEME.md`).
 
 Para la calidad cinematográfica 3D que pide la serie hace falta animación real de los personajes; ver [Versión final](#qué-falta-para-la-versión-animada-final).
 
@@ -174,14 +176,14 @@ En Studio también están las fichas **Personajes → Ficha-Dollar / Ficha-Euro*
 **Provisional (no es el producto final):**
 
 - **Voces:** no hay ninguna grabada. Los tiempos de subtítulos y escenas son estimados y el video **no tiene diálogo audible**: solo música y efectos.
-- **Personajes:** rig 2.5D en SVG con colores genéricos. No representa todavía a los perros reales.
+- **Personajes:** rig 2.5D en SVG con los colores y las marcas de las fotos reales. Es una caricatura de los perros, no la animación 3D final.
 - **Sincronía labial:** sílabas estimadas del texto. Se vuelve real al añadir los audios o los visemas.
 - **Música:** tema sintetizado de relleno. Reemplazar `public/audio/music/tema-escuela.wav`.
 - **Duración:** con el guion completo, la estimación da unos 2 minutos, más que el objetivo de 75–90 s. La duración real saldrá de las voces; si se pasa, hay que acelerar la locución o recortar líneas en `episode.ts`.
 
 ## Qué falta para la versión animada final
 
-1. **Fotografías** de Dollar y Euro (de frente, de perfil, de cuerpo entero), para fijar su identidad visual.
+1. **Más fotografías** de Dollar y Euro (perfil, cuerpo entero, cola, patas traseras, de cachorros si existen), para afinar la identidad visual. Las de frente ya están en `docs/referencias/`.
 2. **Voces finales**: locutores paisas o TTS revisado toma por toma, un archivo por línea. Después, `npm run assets`.
 3. **Visemas Rhubarb** de cada voz, para que la boca siga los fonemas.
 4. **Animación cinematográfica 3D**: el nivel de largometraje pedido no se logra con un rig SVG. Hay dos caminos:

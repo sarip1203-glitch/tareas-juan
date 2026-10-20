@@ -1,7 +1,8 @@
 # Fotos y recortes de los personajes
 
-Mientras esta carpeta no tenga imágenes, Dollar y Euro se dibujan con el
-rig SVG provisional (colores genéricos de pastor de Shetland).
+Mientras esta carpeta no tenga recortes, Dollar y Euro se dibujan con el
+rig SVG 2.5D, con los colores y las marcas de sus fotos reales
+(`docs/referencias/`).
 
 Por perro (`dollar/` y `euro/`) se admiten dos modos. El sistema los detecta solo:
 
@@ -17,6 +18,7 @@ Por perro (`dollar/` y `euro/`) se admiten dos modos. El sistema los detecta sol
    `photo.headPivot` y la mandíbula baja `photo.jawTravelPx` al hablar
    (ajustables en `src/config/characters.ts`).
 
-Pongan también aquí las fotos de referencia originales (`referencias/`)
-para ajustar la paleta del rig (`palette` en `src/config/characters.ts`).
+Las fotos originales de referencia van en `docs/referencias/` (no aquí, para
+que no entren en el paquete del video). De ellas salen `palette` y `markings`
+en `src/config/characters.ts`.
 No intercambien nunca colores ni manchas entre Dollar y Euro.

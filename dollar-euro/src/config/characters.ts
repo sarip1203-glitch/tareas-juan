@@ -3,27 +3,40 @@ import type { CharacterId } from "../episodes/types";
 /**
  * Identidad de los personajes.
  *
- * ⚠️ PALETAS PROVISIONALES: todavía no tenemos las fotografías reales de
- * Dollar y Euro. Los colores de pelaje que aparecen aquí son genéricos de
- * pastor de Shetland (sable y blanco) y NO representan a los perros reales.
- * Cuando lleguen las fotos:
- *   1. Ajustar `palette` de cada perro (colores, manchas, blaze).
- *   2. O bien colocar recortes en public/characters/<perro>/ y el sistema
- *      cambiará automáticamente al modo foto (ver README).
- *
- * Lo único que identifica a cada perro mientras tanto es el COLLAR
- * (azul = Dollar, amarillo = Euro), que coincide con su color de subtítulos.
- * Nunca intercambiar estos valores entre personajes.
+ * Paletas y marcas tomadas de las fotografías reales
+ * (docs/referencias/dollar-ladrillos.jpg y docs/referencias/euro-sofa.jpg):
+ *  - Dollar: sable muy sombreado, cuerpo y melena casi negros, cara dorada
+ *    con sombra oscura alrededor de los ojos, pechera blanca estrecha,
+ *    patas canela arriba y blancas abajo, ojos almendrados.
+ *  - Euro: sable con melena marrón muy oscuro, cara canela anaranjada,
+ *    pechera blanca grande, patas blancas, ojos redondos.
+ * Ninguno tiene lista blanca en la frente. Nunca intercambiar estos valores.
+ * Los colores del collar (azul / amarillo) coinciden con sus subtítulos.
  */
 export type FurPalette = {
-  coat: string; // pelaje principal (sable)
-  coatDark: string; // sombras / puntas
-  coatLight: string; // brillos
-  white: string; // collar de pelo, blaze, patas
+  coat: string; // cuerpo, cuartos traseros, cola
+  coatDark: string;
+  coatLight: string;
+  mane: string; // melena que enmarca la cara y orejas
+  maneLight: string;
+  face: string; // cara
+  faceLight: string;
+  faceDark: string; // sombra alrededor de ojos / frente
+  muzzle: string;
+  chin: string;
+  white: string; // pechera y patas
   whiteShade: string;
   nose: string;
   iris: string;
   innerEar: string;
+};
+
+export type Markings = {
+  blaze: boolean; // lista blanca en la frente
+  ruffWidth: number; // ancho relativo de la pechera blanca
+  legs: "white" | "socks"; // "socks" = canela arriba, blancas abajo
+  eyes: "round" | "almond";
+  tailTip: boolean; // punta blanca en la cola
 };
 
 export type VoiceConfig = {
@@ -54,6 +67,7 @@ export type CharacterConfig = {
   collarColor: string;
   tagLetter: string;
   palette: FurPalette;
+  markings: Markings;
   palettesAreProvisional: boolean;
   voice: VoiceConfig;
   // Posición en el estudio (coordenadas del mundo 1080×1920, base de las patas).
@@ -72,16 +86,24 @@ export const CHARACTERS: Record<CharacterId, CharacterConfig> = {
     collarColor: "#1E7BE6",
     tagLetter: "D",
     palette: {
-      coat: "#C8873D",
-      coatDark: "#7E4A1E",
-      coatLight: "#E9B672",
-      white: "#FAF5EC",
-      whiteShade: "#D9CFC0",
-      nose: "#1B1412",
-      iris: "#4A2A12",
-      innerEar: "#E7B9A4",
+      coat: "#2B2526",
+      coatDark: "#141011",
+      coatLight: "#4E3E34",
+      mane: "#1C1617",
+      maneLight: "#3E3330",
+      face: "#B9875C",
+      faceLight: "#D8AC80",
+      faceDark: "#8A5F40",
+      muzzle: "#BF9068",
+      chin: "#E2CDB6",
+      white: "#F3EEE8",
+      whiteShade: "#CBBFB4",
+      nose: "#161314",
+      iris: "#3A2416",
+      innerEar: "#7A5A44",
     },
-    palettesAreProvisional: true,
+    markings: { blaze: false, ruffWidth: 0.72, legs: "socks", eyes: "almond", tailTip: false },
+    palettesAreProvisional: false,
     voice: {
       description:
         "Hombre, paisa natural de Medellín, tono medio-grave, seguro, humor seco e irónico. Ritmo pausado.",
@@ -103,16 +125,24 @@ export const CHARACTERS: Record<CharacterId, CharacterConfig> = {
     collarColor: "#F5C211",
     tagLetter: "E",
     palette: {
-      coat: "#B9783A",
-      coatDark: "#6F3F18",
-      coatLight: "#DFA866",
-      white: "#FBF6EE",
-      whiteShade: "#DCD2C3",
-      nose: "#1B1412",
-      iris: "#3E230F",
-      innerEar: "#EBBBA6",
+      coat: "#3A332B",
+      coatDark: "#1F1C19",
+      coatLight: "#6A5845",
+      mane: "#2E2924",
+      maneLight: "#5C4C3A",
+      face: "#C07E45",
+      faceLight: "#E4B07A",
+      faceDark: "#93603A",
+      muzzle: "#C58A52",
+      chin: "#EDE2D4",
+      white: "#F4F6F7",
+      whiteShade: "#CDD3D8",
+      nose: "#1A1817",
+      iris: "#2A1C12",
+      innerEar: "#9C7650",
     },
-    palettesAreProvisional: true,
+    markings: { blaze: false, ruffWidth: 1.06, legs: "white", eyes: "round", tailTip: false },
+    palettesAreProvisional: false,
     voice: {
       description:
         "Hombre joven, paisa de Medellín, más expresivo y rápido, bromista, gesticula con la voz. Risitas breves.",

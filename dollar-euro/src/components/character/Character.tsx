@@ -96,6 +96,7 @@ export const Character: React.FC<Props> = ({ id, pose, body, puppy, width, x, y,
           uid={`${id}${uidSuffix}`}
           pose={pose}
           palette={cfg.palette}
+          markings={cfg.markings}
           collarColor={cfg.collarColor}
           tagLetter={cfg.tagLetter}
           puppy={puppy}
