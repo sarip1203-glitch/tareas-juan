@@ -1,0 +1,8 @@
+node_modules
+dist
+build
+.DS_Store
+.env
+
+# Videos renderizados (no se suben a git).
+out

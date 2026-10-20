@@ -1,0 +1,46 @@
+{
+  "name": "dollar-euro",
+  "version": "1.0.0",
+  "description": "DOLLAR & EURO — Escuela para humanos. Serie animada vertical en Remotion.",
+  "repository": {},
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24"
+  },
+  "private": true,
+  "dependencies": {
+    "@remotion/cli": "4.0.537",
+    "@remotion/fonts": "4.0.537",
+    "@remotion/zod-types": "4.0.537",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.537",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.537",
+    "@types/react": "19.2.7",
+    "@types/web": "0.0.166",
+    "eslint": "10.12.0",
+    "prettier": "3.8.1",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "dev": "npm run assets && remotion studio",
+    "assets": "tsx scripts/prepare-assets.ts",
+    "sfx": "tsx scripts/generate-sfx.ts",
+    "check": "npm run assets && tsx scripts/check-episode.ts",
+    "guion": "tsx scripts/export-voice-script.ts",
+    "voices": "tsx scripts/generate-voices-elevenlabs.ts",
+    "render": "npm run assets && remotion render Ep01-QuienSeHizoChichi out/ep01-quien-se-hizo-chichi.mp4",
+    "render:final": "npm run assets && remotion render Ep01-QuienSeHizoChichi out/ep01-quien-se-hizo-chichi-final.mp4 --props='{\"episodeId\":\"ep01\",\"showDraftBadges\":false}'",
+    "still": "npm run assets && remotion still Ep01-QuienSeHizoChichi out/fotograma.png --frame=150",
+    "build": "remotion bundle",
+    "upgrade": "remotion upgrade",
+    "lint": "eslint src scripts && tsc"
+  },
+  "allowScripts": {
+    "esbuild": false
+  }
+}
