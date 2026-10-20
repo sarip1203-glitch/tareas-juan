@@ -15,6 +15,7 @@ export const DraftBadge: React.FC = () => {
   if (missing > 0) items.push(`SIN VOCES: ${missing}/${ep.stats.lines} audios pendientes (tiempos estimados)`);
   if (noPhotos) items.push("PERSONAJES PROVISIONALES (sin fotos reales)");
   else if (rigIds.length > 0) items.push("PERSONAJES 2.5D PROVISIONALES (colores de las fotos, sin animación final)");
+  else items.push("PERSONAJES 2.5D POR CAPAS (sin animación 3D final)");
   if (items.length === 0) return null;
   return (
     <div

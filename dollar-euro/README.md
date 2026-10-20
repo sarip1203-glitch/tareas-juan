@@ -6,9 +6,9 @@ Dos pastores de Shetland paisas les enseñan a los humanos cómo entenderlos.
 Episodio 1: **¿Quién se hizo chichí en la casa?**, sobre enseñar a un cachorro dónde hacer sus necesidades con rutina, paciencia y premios.
 
 > **Estado: borrador funcional.** El episodio compila, se ve en Remotion Studio y se exporta a MP4, pero
-> **todavía no tiene voces** (los tiempos se estiman a partir del texto) y **los perros son un rig SVG
-> 2.5D provisional**, ya con los colores y marcas de sus fotografías reales. El video lo marca en pantalla con un aviso
-> "BORRADOR". Detalles en [Estado actual](#estado-actual).
+> **todavía no tiene voces** (los tiempos se estiman a partir del texto). Los perros son **imágenes realistas
+> animadas en 2.5D por capas** (cabeza, mandíbula, párpados), no animación 3D. El video lo marca en pantalla
+> con un aviso "BORRADOR". Detalles en [Estado actual](#estado-actual).
 
 ---
 
@@ -64,18 +64,42 @@ dollar-euro/
 
 Cada carpeta de `public/` tiene un `LEEME.md` con el formato exacto que espera.
 
-### Fotografías de Dollar y Euro
+### Personajes: imágenes y fotografías
 
-Las fotos de referencia están en `docs/referencias/` (`dollar-ladrillos.jpg` y `euro-sofa.jpg`). De ellas salen los colores y las marcas del rig 2.5D (`palette` y `markings` en `src/config/characters.ts`):
+En `docs/referencias/` hay dos tipos de imágenes:
 
-- **Dollar**: sable muy sombreado, con cuerpo y melena casi negros y cara dorada con sombra alrededor de los ojos. Pechera blanca estrecha, patas canela arriba y blancas abajo, ojos almendrados. Collar azul.
-- **Euro**: sable con melena marrón muy oscuro y cara canela anaranjada. Pechera blanca grande, patas blancas, ojos redondos. Collar amarillo.
+- **Fotos reales**: `dollar-ladrillos.jpg` y `euro-sofa.jpg`. Son la referencia de identidad.
+- **Imágenes de estilo**: `estilo-dollar.webp` (Dollar de pie, más oscuro) y `estilo-euro.webp` (Euro sentado, con la lengua afuera). Es el look que se busca.
 
-Ninguno tiene lista blanca en la frente. Nunca hay que intercambiar estos valores entre los dos.
+Los perros del video salen de las **imágenes de estilo**, convertidas en una marioneta 2.5D por capas:
 
-Para usar las fotos directamente en lugar del dibujo, pongan un recorte sin fondo (`cutout.png`), o las capas `body.png` + `head.png` + `jaw.png`, en `public/characters/<perro>/`. El sistema cambia solo al modo foto 2.5D (ver `public/characters/LEEME.md`).
+1. `scripts/prepare-photo-puppet.py` quita el fondo con IA en local (rembg) y separa cada imagen en `body.png`, `head.png` y `jaw.png` dentro de `public/characters/<perro>/`.
+2. `src/config/puppets.json` guarda los puntos de cada imagen: cabeza, pivote del cuello, mandíbula, boca y ojos.
+3. `components/character/PhotoPuppet.tsx` las anima con la misma pose que el resto del sistema:
+   - la cabeza se inclina, gira y asiente;
+   - la mandíbula baja con la voz;
+   - los párpados (hechos con el propio pelo de encima del ojo) parpadean;
+   - el cuerpo respira;
+   - las acciones mueven al perro entero.
 
-Para la calidad cinematográfica 3D que pide la serie hace falta animación real de los personajes; ver [Versión final](#qué-falta-para-la-versión-animada-final).
+   No mueve pupilas, cejas, orejas, cola ni patas sueltas.
+
+Para cambiar o mejorar una imagen:
+
+1. Reemplacen el archivo en `docs/referencias/` y ajusten sus puntos en `puppets.json`.
+2. Ejecuten:
+   ```
+   pip install "rembg[cpu]" pillow numpy
+   python scripts/prepare-photo-puppet.py
+   npm run assets
+   ```
+
+Si se borran las capas, el sistema vuelve solo al rig SVG dibujado. Ese rig usa los colores y las marcas de las fotos reales (`palette` y `markings` en `src/config/characters.ts`):
+
+- **Dollar**: casi negro, cara dorada, pechera estrecha, patas canela arriba y blancas abajo, ojos almendrados.
+- **Euro**: melena marrón oscuro, cara canela, pechera grande, patas blancas, ojos redondos.
+
+Nunca hay que intercambiar estos valores entre los dos.
 
 ### Voces
 
@@ -146,7 +170,7 @@ Para un flashback o una ilustración educativa nueva hay que añadir su dibujo e
 | Componente | Archivo |
 |---|---|
 | Intro (logo + título del episodio) | `components/Intro.tsx` |
-| Character (rig / foto, misma pose) | `components/character/Character.tsx`, `DogRig.tsx`, `pose.ts` |
+| Character (marioneta realista / rig, misma pose) | `components/character/Character.tsx`, `PhotoPuppet.tsx`, `DogRig.tsx`, `pose.ts` |
 | CharacterDialogue | `components/CharacterDialogue.tsx` |
 | StudioScene | `scenes/StudioScene.tsx` + `components/StudioSet.tsx` + `components/Camera.tsx` |
 | FlashbackScene | `scenes/FlashbackScene.tsx` |
@@ -157,7 +181,7 @@ Para un flashback o una ilustración educativa nueva hay que añadir su dibujo e
 | SceneTransition | `components/SceneTransition.tsx` |
 | EpisodeOutro | `components/EpisodeOutro.tsx` |
 
-En Studio también están las fichas **Personajes → Ficha-Dollar / Ficha-Euro**, con todas las expresiones animadas.
+En Studio también están las fichas **Personajes → Ficha-Dollar / Ficha-Euro**, con las 12 expresiones del rig dibujado. Ese rig es la versión de respaldo y también se usa en las ilustraciones del tablero educativo.
 
 ---
 
@@ -176,7 +200,7 @@ En Studio también están las fichas **Personajes → Ficha-Dollar / Ficha-Euro*
 **Provisional (no es el producto final):**
 
 - **Voces:** no hay ninguna grabada. Los tiempos de subtítulos y escenas son estimados y el video **no tiene diálogo audible**: solo música y efectos.
-- **Personajes:** rig 2.5D en SVG con los colores y las marcas de las fotos reales. Es una caricatura de los perros, no la animación 3D final.
+- **Personajes:** imágenes realistas animadas por capas (2.5D). La cabeza, la boca y los párpados se mueven, pero las orejas, la cola, las patas y la mirada no. En los flashbacks, los "cachorros" son los mismos perros más pequeños y con la cabeza agrandada, no cachorros reales. El "tapar con la pata" del remate se resuelve con Dollar lanzándose delante de Euro.
 - **Sincronía labial:** sílabas estimadas del texto. Se vuelve real al añadir los audios o los visemas.
 - **Música:** tema sintetizado de relleno. Reemplazar `public/audio/music/tema-escuela.wav`.
 - **Duración:** con el guion completo, la estimación da unos 2 minutos, más que el objetivo de 75–90 s. La duración real saldrá de las voces; si se pasa, hay que acelerar la locución o recortar líneas en `episode.ts`.
@@ -186,8 +210,6 @@ En Studio también están las fichas **Personajes → Ficha-Dollar / Ficha-Euro*
 1. **Más fotografías** de Dollar y Euro (perfil, cuerpo entero, cola, patas traseras, de cachorros si existen), para afinar la identidad visual. Las de frente ya están en `docs/referencias/`.
 2. **Voces finales**: locutores paisas o TTS revisado toma por toma, un archivo por línea. Después, `npm run assets`.
 3. **Visemas Rhubarb** de cada voz, para que la boca siga los fonemas.
-4. **Animación cinematográfica 3D**: el nivel de largometraje pedido no se logra con un rig SVG. Hay dos caminos:
-   - Animar a los personajes en 3D (Blender o similar) o con una herramienta de video IA a partir de las fotos. Luego exportar clips verticales por línea o por plano y asignarlos con `video:` en el episodio. Remotion se encarga de montaje, audio, subtítulos y transiciones.
-   - O bien preparar las fotos por capas (`body/head/jaw.png`) para el modo foto 2.5D, también provisional, pero con la cara real de los perros.
+4. **Animación cinematográfica completa**: para orejas, cola, patas, mirada y movimientos reales, lo viable es generar clips con una herramienta de video IA a partir de `docs/referencias/estilo-*.webp`, o animar en 3D. Los clips se exportan verticales, por línea o por plano, y se asignan con `video:` en el episodio. Remotion ya se encarga del montaje, el audio, los subtítulos y las transiciones.
 5. **Música final** con licencia adecuada.
 6. Quitar los avisos con `npm run render:final`.

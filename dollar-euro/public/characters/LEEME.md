@@ -1,24 +1,18 @@
-# Fotos y recortes de los personajes
+# Personajes
 
-Mientras esta carpeta no tenga recortes, Dollar y Euro se dibujan con el
-rig SVG 2.5D, con los colores y las marcas de sus fotos reales
-(`docs/referencias/`).
+Esta carpeta tiene las capas de la marioneta 2.5D realista de cada perro.
+Se generan con `scripts/prepare-photo-puppet.py` a partir de
+`docs/referencias/estilo-<perro>.webp` y de los puntos de `src/config/puppets.json`:
 
-Por perro (`dollar/` y `euro/`) se admiten dos modos. El sistema los detecta solo:
+- `body.png`: el perro completo sin el núcleo de la cabeza.
+- `head.png`: la cabeza con borde suavizado (gira, se inclina y asiente).
+- `jaw.png`: la mandíbula inferior (baja al hablar).
 
-1. **Recorte único** → `cutout.png`
-   Foto del perro sentado, de frente, con fondo transparente (PNG), base de
-   las patas en el borde inferior, proporción 3:4 (p. ej. 1200×1600).
-   Animación 2.5D limitada: respiración, inclinación y rebote al hablar.
-   La boca NO se mueve en este modo.
+Las tres tienen el tamaño de la imagen original.
 
-2. **Capas** → `body.png` + `head.png` (+ `jaw.png` opcional)
-   Las tres del mismo tamaño (3:4), alineadas. `head.png` sin mandíbula
-   inferior; `jaw.png` solo con la mandíbula. La cabeza gira sobre
-   `photo.headPivot` y la mandíbula baja `photo.jawTravelPx` al hablar
-   (ajustables en `src/config/characters.ts`).
+Si se borran, el sistema vuelve al rig SVG dibujado. Ese rig usa los colores
+de las fotos reales (`palette` y `markings` en `src/config/characters.ts`).
+Otra alternativa es un solo recorte sin fondo, `cutout.png`, que solo
+respira y se inclina.
 
-Las fotos originales de referencia van en `docs/referencias/` (no aquí, para
-que no entren en el paquete del video). De ellas salen `palette` y `markings`
-en `src/config/characters.ts`.
-No intercambien nunca colores ni manchas entre Dollar y Euro.
+No intercambien nunca colores, manchas, tamaños ni imágenes entre Dollar y Euro.

@@ -1,0 +1,103 @@
+{
+  "_info": "Marioneta 2.5D a partir de imágenes realistas. Coordenadas en píxeles de la imagen original. La usan scripts/prepare-photo-puppet.py (para generar capas) y src/components/character/PhotoPuppet.tsx (para animarlas).",
+  "euro": {
+    "source": "docs/referencias/estilo-euro.webp",
+    "size": [
+      916,
+      1306
+    ],
+    "feetY": 1268,
+    "centerX": 470,
+    "displayHeight": 1.12,
+    "head": {
+      "cx": 468,
+      "cy": 232,
+      "rx": 262,
+      "ry": 256,
+      "feather": 46
+    },
+    "pivot": [
+      490,
+      470
+    ],
+    "jaw": {
+      "cx": 506,
+      "cy": 416,
+      "rx": 74,
+      "ry": 27,
+      "feather": 9
+    },
+    "mouth": {
+      "x": 508,
+      "y": 393,
+      "w": 86
+    },
+    "jawTravel": 30,
+    "eyes": [
+      {
+        "x": 407,
+        "y": 262,
+        "rx": 21,
+        "ry": 18,
+        "lid": "#B56C32"
+      },
+      {
+        "x": 532,
+        "y": 227,
+        "rx": 21,
+        "ry": 18,
+        "lid": "#E7A160"
+      }
+    ]
+  },
+  "dollar": {
+    "source": "docs/referencias/estilo-dollar.webp",
+    "size": [
+      714,
+      1008
+    ],
+    "feetY": 975,
+    "centerX": 470,
+    "displayHeight": 1.12,
+    "head": {
+      "cx": 465,
+      "cy": 208,
+      "rx": 232,
+      "ry": 214,
+      "feather": 40
+    },
+    "pivot": [
+      472,
+      405
+    ],
+    "jaw": {
+      "cx": 477,
+      "cy": 361,
+      "rx": 40,
+      "ry": 15,
+      "feather": 6
+    },
+    "mouth": {
+      "x": 477,
+      "y": 349,
+      "w": 68
+    },
+    "jawTravel": 22,
+    "eyes": [
+      {
+        "x": 405,
+        "y": 230,
+        "rx": 16,
+        "ry": 13,
+        "lid": "#C17B43"
+      },
+      {
+        "x": 502,
+        "y": 215,
+        "rx": 16,
+        "ry": 13,
+        "lid": "#D48F54"
+      }
+    ]
+  }
+}

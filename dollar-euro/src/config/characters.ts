@@ -52,13 +52,6 @@ export type VoiceConfig = {
   estimatedCharsPerSecond: number;
 };
 
-export type PhotoRigConfig = {
-  // Punto de giro de la cabeza dentro de head.png (fracción 0..1).
-  headPivot: [number, number];
-  // Desplazamiento máximo de jaw.png al abrir la boca (px de la imagen).
-  jawTravelPx: number;
-};
-
 export type CharacterConfig = {
   id: CharacterId;
   name: string;
@@ -74,7 +67,6 @@ export type CharacterConfig = {
   studioAnchor: { x: number; y: number };
   // Lado hacia el que levanta la pata para tapar al otro.
   nearSide: "left" | "right";
-  photo: PhotoRigConfig;
 };
 
 export const CHARACTERS: Record<CharacterId, CharacterConfig> = {
@@ -115,7 +107,6 @@ export const CHARACTERS: Record<CharacterId, CharacterConfig> = {
     },
     studioAnchor: { x: 300, y: 1530 },
     nearSide: "right",
-    photo: { headPivot: [0.5, 0.85], jawTravelPx: 26 },
   },
   euro: {
     id: "euro",
@@ -154,7 +145,6 @@ export const CHARACTERS: Record<CharacterId, CharacterConfig> = {
     },
     studioAnchor: { x: 780, y: 1530 },
     nearSide: "left",
-    photo: { headPivot: [0.5, 0.85], jawTravelPx: 26 },
   },
 };
 
